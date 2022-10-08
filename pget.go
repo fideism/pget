@@ -37,6 +37,38 @@ func New() *Pget {
 	}
 }
 
+// Save 下载并保存
+func (pget *Pget) Save(ctx context.Context, url, dir, filename string) error {
+	if err := pget.Ready(`1.0.0`, []string{url}); err != nil {
+		return errTop(err)
+	}
+
+	client := newDownloadClient(16)
+
+	target, err := Check(ctx, &CheckConfig{
+		URLs:    pget.URLs,
+		Timeout: time.Duration(pget.timeout) * time.Second,
+		Client:  client,
+	})
+	if err != nil {
+		return err
+	}
+
+	opts := []DownloadOption{
+		WithUserAgent(pget.useragent),
+		WithReferer(pget.referer),
+	}
+
+	return Download(ctx, &DownloadConfig{
+		Filename:      filename,
+		Dirname:       dir,
+		ContentLength: target.ContentLength,
+		Procs:         pget.Procs,
+		URLs:          target.URLs,
+		Client:        client,
+	}, opts...)
+}
+
 // Run execute methods in pget package
 func (pget *Pget) Run(ctx context.Context, version string, args []string) error {
 	if err := pget.Ready(version, args); err != nil {
