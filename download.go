@@ -118,6 +118,7 @@ func assignTasks(c *assignTasksConfig) []*task {
 	return tasks
 }
 
+// DownloadConfig ...
 type DownloadConfig struct {
 	Filename      string
 	Dirname       string
@@ -129,20 +130,24 @@ type DownloadConfig struct {
 	*makeRequestOption
 }
 
+// DownloadOption ...
 type DownloadOption func(c *DownloadConfig)
 
+// WithUserAgent ....
 func WithUserAgent(ua string) DownloadOption {
 	return func(c *DownloadConfig) {
 		c.makeRequestOption.useragent = ua
 	}
 }
 
+// WithReferer ...
 func WithReferer(referer string) DownloadOption {
 	return func(c *DownloadConfig) {
 		c.makeRequestOption.referer = referer
 	}
 }
 
+// Download ...
 func Download(ctx context.Context, c *DownloadConfig, opts ...DownloadOption) error {
 	partialDir := getPartialDirname(c.Dirname, c.Filename, c.Procs)
 

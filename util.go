@@ -44,6 +44,7 @@ func makeRange(i, procs int, rangeSize, contentLength int64) Range {
 	}
 }
 
+// BytesRange ...
 func (r Range) BytesRange() string {
 	return fmt.Sprintf("bytes=%d-%d", r.low, r.high)
 }

@@ -44,11 +44,11 @@ type dialRateLimiter struct {
 func newDialRateLimiter(dialer *net.Dialer) *dialRateLimiter {
 	// exact value doesn't matter too much, but too low will be too slow,
 	// and too high will reduce the beneficial effect on thread count
-	const concurrentDialsPerCpu = 10
+	const concurrentDialsPerCPU = 10
 
 	return &dialRateLimiter{
 		dialer: dialer,
-		sem:    make(chan struct{}, concurrentDialsPerCpu*runtime.NumCPU()),
+		sem:    make(chan struct{}, concurrentDialsPerCPU*runtime.NumCPU()),
 	}
 }
 
