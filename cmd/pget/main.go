@@ -3,14 +3,18 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/fideism/pget"
 	"os"
-
-	"github.com/Code-Hex/pget"
 )
 
 func main() {
+
+	//p := `E:\_ansible-2.9.15-1.el8.noarch.rpm.1/ansible-2.9.15-1.el8.noarch.rpm.1.0`
+	//
+	//panic(filepath.ToSlash(p))
 	cli := pget.New()
-	err := cli.Save(context.Background(), `https://mirrors.aliyun.com/centos/8.5.2111/BaseOS/x86_64/os/isolinux/initrd.img?spm=a2c6h.25603864.0.0.50b3d2f3EWIGky`, `/home/hyc/backup`, `initrd.img`)
+	//err := cli.Save(context.Background(), `https://mirrors.aliyun.com/centos/8/storage/x86_64/ceph-nautilus/Packages/a/ansible-2.9.15-1.el8.noarch.rpm?spm=a2c6h.25603864.0.0.73896472ktubZE`, `E:\`, `ansible-2.9.15-1.el8.noarch.rpm`)
+	err := cli.Save(context.Background(), `https://mirrors.aliyun.com/centos/8/storage/x86_64/ceph-nautilus/Packages/a/ansible-2.9.15-1.el8.noarch.rpm?spm=a2c6h.25603864.0.0.73896472ktubZE`, `/home/hyc/backup`, `ansible-2.9.15-1.el8.noarch.rpm`)
 
 	if err != nil {
 		if cli.Trace {
