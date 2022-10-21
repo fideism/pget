@@ -242,8 +242,6 @@ func (t *task) download(req *http.Request, bar *pb.ProgressBar) error {
 }
 
 func bindFiles(c *DownloadConfig, partialDir string) error {
-	fmt.Fprintln(stdout, "\nbinding with files...")
-
 	destPath := filepath.Join(c.Dirname, c.Filename)
 	f, err := os.Create(destPath)
 	if err != nil {
@@ -282,7 +280,6 @@ func bindFiles(c *DownloadConfig, partialDir string) error {
 	}
 
 	bar.Finish()
-	fmt.Println(`bar finished:`, partialDir)
 
 	// remove download location
 	// RemoveAll reason: will create .DS_Store in download location if execute on mac

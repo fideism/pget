@@ -42,7 +42,7 @@ func TestRunResume(t *testing.T) {
 	// ├── file.name.3.1
 	// └── file.name.3.2
 	resumeFilePath := filepath.Join(tmpDir, "resume.tar.gz")
-	if err := copy(
+	if err := delCopy(
 		filepath.Join("_testdata", "resume.tar.gz"),
 		resumeFilePath,
 	); err != nil {
@@ -73,7 +73,7 @@ func TestRunResume(t *testing.T) {
 	)
 }
 
-func copy(src, dest string) error {
+func delCopy(src, dest string) error {
 	srcp, err := os.Open(src)
 	if err != nil {
 		return err
