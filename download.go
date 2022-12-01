@@ -242,8 +242,6 @@ func (t *task) download(req *http.Request, bar *pb.ProgressBar) error {
 }
 
 func bindFiles(c *DownloadConfig, partialDir string) error {
-	fmt.Fprintln(stdout, "\nbinding with files...")
-
 	destPath := filepath.Join(c.Dirname, c.Filename)
 	f, err := os.Create(destPath)
 	if err != nil {
@@ -251,7 +249,7 @@ func bindFiles(c *DownloadConfig, partialDir string) error {
 	}
 	defer f.Close()
 
-	bar := pb.Start64(c.ContentLength).SetWriter(stdout)
+	//bar := pb.Start64(c.ContentLength).SetWriter(stdout)
 
 	copyFn := func(name string) error {
 		subfp, err := os.Open(name)
@@ -261,8 +259,8 @@ func bindFiles(c *DownloadConfig, partialDir string) error {
 
 		defer subfp.Close()
 
-		proxy := bar.NewProxyReader(subfp)
-		if _, err := io.Copy(f, proxy); err != nil {
+		//proxy := bar.NewProxyReader(subfp)
+		if _, err := io.Copy(f, subfp); err != nil {
 			return errors.Wrapf(err, "failed to copy %q", name)
 		}
 
@@ -281,9 +279,7 @@ func bindFiles(c *DownloadConfig, partialDir string) error {
 		}
 	}
 
-	bar.Finish()
-	fmt.Println(`bar finished:`, partialDir)
-
+	//bar.Finish()
 	// remove download location
 	// RemoveAll reason: will create .DS_Store in download location if execute on mac
 	if err := os.RemoveAll(partialDir); err != nil {
